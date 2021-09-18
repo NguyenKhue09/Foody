@@ -1,4 +1,4 @@
-package com.khue.foody
+package com.khue.foody.ui.fragments.recipes
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

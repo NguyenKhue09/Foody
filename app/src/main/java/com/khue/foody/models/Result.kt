@@ -19,8 +19,6 @@ data class Result(
     val id: Int,
     @SerializedName("image")
     val image: String,
-    @SerializedName("license")
-    val license: String,
     @SerializedName("readyInMinutes")
     val readyInMinutes: Int,
     @SerializedName("sourceName")

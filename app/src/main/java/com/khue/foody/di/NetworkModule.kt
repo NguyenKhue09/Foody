@@ -1,7 +1,7 @@
 package com.khue.foody.di
 
-import com.khue.foody.Constants.Companion.BASE_URL
-import com.khue.foody.FoodRecipesApi
+import com.khue.foody.util.Constants.Companion.BASE_URL
+import com.khue.foody.data.network.FoodRecipesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,22 +19,22 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient() : OkHttpClient {
         return OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.MINUTES)
-            .connectTimeout(15, TimeUnit.MINUTES)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideConvertorFactory(): GsonConverterFactory {
-        return  GsonConverterFactory.create()
+    fun provideConverterFactory(): GsonConverterFactory {
+        return GsonConverterFactory.create()
     }
 
     @Singleton
     @Provides
-    fun providerRetrofitInstance(
+    fun provideRetrofitInstance(
         okHttpClient: OkHttpClient,
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {

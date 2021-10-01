@@ -31,6 +31,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         val selectedMealTypeId = intPreferencesKey(PREFERENCES_MEAL_TYPE_ID)
         val selectedDietType = stringPreferencesKey(PREFERENCES_DIET_TYPE)
         val selectedDietTypeId = intPreferencesKey(PREFERENCES_DIET_TYPE_ID)
+        val backOnline = booleanPreferencesKey("backOnline")
     }
     private val dataStore: DataStore<Preferences> = context.dataStore
 
@@ -40,6 +41,12 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
             preferences[PreferenceKeys.selectedMealTypeId] = mealTypeId
             preferences[PreferenceKeys.selectedDietType] = dietType
             preferences[PreferenceKeys.selectedDietTypeId] = dietTypeId
+        }
+    }
+
+    suspend fun saveBackOnline(backOnline: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferenceKeys.backOnline] = backOnline
         }
     }
 
@@ -62,6 +69,19 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
                 selectedDietType,
                 selectedDietTypeId
             )
+        }
+
+    val readBackOnline: Flow<Boolean> = dataStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                emit(emptyPreferences())
+            } else {
+                throw  exception
+            }
+        }
+        .map { preferences ->
+           val backOnline = preferences[PreferenceKeys.backOnline] ?: false
+            backOnline
         }
 }
 

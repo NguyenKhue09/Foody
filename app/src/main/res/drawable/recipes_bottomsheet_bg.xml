@@ -6,3 +6,4 @@
         android:topRightRadius="10dp"/>
 
 </shape>
+<!--Sử dụng trong file theme để thay đổi backgroung cho bottomsheet-->

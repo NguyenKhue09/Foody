@@ -13,6 +13,7 @@ import coil.load
 import com.khue.foody.R
 import com.khue.foody.models.Result
 import com.khue.foody.ui.fragments.recipes.RecipesFragmentDirections
+import org.jsoup.Jsoup
 import java.lang.Exception
 
 
@@ -84,6 +85,15 @@ class RecipesRowBinding {
                         )
                     }
                 }
+            }
+        }
+
+        @BindingAdapter("parseHtml")
+        @JvmStatic
+        fun parseHtml(textView: TextView, description: String?) {
+            if (description != null ) {
+                val desc = Jsoup.parse(description).text()
+                textView.text = desc
             }
         }
     }

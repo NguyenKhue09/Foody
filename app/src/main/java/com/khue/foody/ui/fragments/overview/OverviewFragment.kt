@@ -10,6 +10,7 @@ import coil.load
 import com.khue.foody.R
 import com.khue.foody.databinding.FragmentOverviewBinding
 import com.khue.foody.models.Result
+import com.khue.foody.util.Constants.Companion.RECIPE_RESULT_KEY
 import org.jsoup.Jsoup
 
 
@@ -24,7 +25,7 @@ class OverviewFragment : Fragment() {
         _mBinding = FragmentOverviewBinding.inflate(layoutInflater, container, false)
 
         val args = arguments
-        val myBundle: Result? = args?.getParcelable("recipeBundle")
+        val myBundle: Result? = args?.getParcelable(RECIPE_RESULT_KEY)
 
         _mBinding!!.mainImageView.load(myBundle?.image)
         _mBinding!!.titleTextView.text  = myBundle?.title

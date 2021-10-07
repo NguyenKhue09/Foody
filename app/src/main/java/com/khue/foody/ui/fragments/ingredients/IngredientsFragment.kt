@@ -5,17 +5,44 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.khue.foody.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.khue.foody.adapter.IngredientAdapter
+import com.khue.foody.databinding.FragmentIngredientsBinding
+import com.khue.foody.models.Result
+import com.khue.foody.util.Constants.Companion.RECIPE_RESULT_KEY
 
 
 class IngredientsFragment : Fragment() {
+
+    private val mAdapter: IngredientAdapter by lazy {
+        IngredientAdapter()
+    }
+    private var _mBinding: FragmentIngredientsBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ingredients, container, false)
+        _mBinding = FragmentIngredientsBinding.inflate(layoutInflater, container, false)
+
+        val args = arguments
+        val myBundle: Result? = args?.getParcelable(RECIPE_RESULT_KEY)
+
+        setupRecyclerView()
+        myBundle?.extendedIngredients?.let {
+            mAdapter.setData(it)
+        }
+
+        return _mBinding!!.root
     }
 
+    private fun setupRecyclerView() {
+        _mBinding!!.ingredientRecyclerView.adapter = mAdapter
+        _mBinding!!.ingredientRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _mBinding = null
+    }
 }

@@ -37,4 +37,7 @@
     <string name="save_to_favorite">Save to Favorite</string>
     <string name="no_favorite_recipe">No Favorite Recipe.</string>
     <string name="delete_favorite_menu">Delete Favorite Menu</string>
+    <string name="delete_all">Delete All</string>
+
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet ...</string>
 </resources>

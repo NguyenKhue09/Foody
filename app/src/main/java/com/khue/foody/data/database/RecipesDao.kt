@@ -2,7 +2,9 @@ package com.khue.foody.data.database
 
 import androidx.room.*
 import com.khue.foody.data.database.entities.FavoritesEntity
+import com.khue.foody.data.database.entities.FoodJokeEntity
 import com.khue.foody.data.database.entities.RecipesEntity
+import com.khue.foody.models.FoodJoke
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,6 +16,9 @@ interface RecipesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteRecipe(favoritesEntity: FavoritesEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFoodJoke(foodJokeEntity: FoodJokeEntity)
+
     /** When data changes, you usually want to take some action, such as displaying the updated data in the UI.
     *This means you have to observe the data so when it changes, you can react.
     *To observe data changes you will use Flow from kotlinx-coroutines.
@@ -24,6 +29,9 @@ interface RecipesDao {
 
     @Query("SELECT * FROM favorites_recipes_table ORDER BY id ASC")
     fun readFavoriteRecipes(): Flow<List<FavoritesEntity>>
+
+    @Query("SELECT * FROM food_joke_table ORDER BY id ASC")
+    fun readFoodJoke(): Flow<List<FoodJoke>>
 
     @Delete
     suspend fun deleteFavoriteRecipe(favoritesEntity: FavoritesEntity)

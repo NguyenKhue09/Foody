@@ -41,8 +41,8 @@ class IngredientsFragment : Fragment() {
         _mBinding!!.ingredientRecyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _mBinding = null
     }
 }

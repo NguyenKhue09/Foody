@@ -68,8 +68,8 @@ class OverviewFragment : Fragment() {
         return _mBinding!!.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _mBinding = null
     }
 

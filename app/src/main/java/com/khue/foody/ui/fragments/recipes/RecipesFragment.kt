@@ -69,8 +69,9 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
             recipesViewModel.backOnline = it
         })
 
-
-       lifecycleScope.launch {
+        // thay launch bằng launchWhen.. để ko bị crash app do chuyển sang
+        // fragment khác khi tắt wifi đi
+       lifecycleScope.launchWhenStarted {
            networkListener = NetworkListener()
            networkListener.checkNetworkAvailability(requireContext())
                .collect { status ->
@@ -218,8 +219,8 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         _binding!!.recyclerView.hideShimmer()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

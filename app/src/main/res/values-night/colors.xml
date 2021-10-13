@@ -25,13 +25,15 @@
     <!--  DARK THEME  -->
 
     <color name="backgroundColor">@color/dark</color>
+    <color name="placeHolderColor">@color/darker</color>
+    <color name="itemColor">@color/mediumGray</color>
 
     // Custom Chip Style
-    <color name="checkedChipBackgroundColor">#206200EA</color>
-    <color name="chipBackgroundColor">@color/lightGray</color>
+    <color name="checkedChipBackgroundColor">@color/dark</color>
+    <color name="chipBackgroundColor">@color/darker</color>
 
-    <color name="checkedChipTextColor">@color/colorPrimary</color>
-    <color name="chipTextColor">@color/darkGray</color>
+    <color name="checkedChipTextColor">@color/lightGray</color>
+    <color name="chipTextColor">@color/lightGray</color>
 
 
     //card
@@ -42,8 +44,8 @@
     <color name="descriptionColor">@color/mediumGray</color>
 
     <color name="statusColor">@color/black</color>
-    <color name="contextualStatusColor">@color/darker</color>
-    <color name="contextualActionBarColor">@color/dark</color>
+    <color name="contextualStatusColor">@color/black</color>
+    <color name="contextualActionBarColor">@color/darker</color>
     <color name="actionBarBackgroundColor">@color/darker</color>
 
     // bottom Nav

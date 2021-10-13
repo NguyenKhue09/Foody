@@ -65,6 +65,8 @@ class DetailsActivity : AppCompatActivity() {
             fragments,
             this
         )
+
+        _mBinding!!.viewPager2.isUserInputEnabled = false
         // tab layout
         _mBinding!!.viewPager2.apply {
             adapter = pagerAdapter

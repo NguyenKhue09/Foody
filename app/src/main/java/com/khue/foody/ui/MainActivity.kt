@@ -15,14 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mBinding: ActivityMainBinding
+    private var mBinding: ActivityMainBinding? = null;
     private lateinit var mNavController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.AppTheme)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(mBinding.root)
+        setContentView(mBinding!!.root)
 
         mNavController = findNavController(R.id.navHostFragment)
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         setupActionBarWithNavController(mNavController, appBarConfiguration)
-        mBinding.navView.setupWithNavController(mNavController)
+        mBinding!!.navView.setupWithNavController(mNavController)
     }
 
     // để chuyển tới fragment khác thì có thể ấn <- để quay lại
@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
         return NavigationUI.navigateUp(mNavController, null)
         
         // return mNavController.navigateUp || super...
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null;
     }
 
 }

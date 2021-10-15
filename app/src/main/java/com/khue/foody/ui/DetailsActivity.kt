@@ -117,7 +117,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun showSnackBar(message: String) {
         Snackbar.make(
-            _mBinding!!.root,
+            _mBinding!!.detailsLayout,
             message,
             Snackbar.LENGTH_SHORT
         ).setAction("Okay"){}

@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable-v24/background_shape.xml" value="0.15" />
+        <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.13802083333333334" />
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/gradient_overlay.xml" value="0.1" />
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_error_placeholder.xml" value="0.10740740740740741" />
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_food_joke_background_dark.xml" value="0.2" />
+        <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_launcher_background.xml" value="0.13802083333333334" />
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_leaf.xml" value="0.176" />
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_restaurant.xml" value="0.26979166666666665" />
         <entry key="..\:/Nothing/AndroidStudioProjects/Foody/app/src/main/res/drawable/ic_splash_screen_light.xml" value="0.2" />

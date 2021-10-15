@@ -95,5 +95,9 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bottomSheetBinding = null;
+    }
 
 }

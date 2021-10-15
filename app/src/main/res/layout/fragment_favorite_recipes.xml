@@ -21,7 +21,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favoriteRecipesRecyclerView"
-            viewVisibility="@{mainViewModel.readFavoriteRecipes}"
+            setVisibility="@{mainViewModel.readFavoriteRecipes}"
             setData="@{mAdapter}"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -36,7 +36,7 @@
 
         <ImageView
             android:id="@+id/no_data_imageView"
-            viewVisibility="@{mainViewModel.readFavoriteRecipes}"
+            setVisibility="@{mainViewModel.readFavoriteRecipes}"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:alpha="0.5"
@@ -50,7 +50,7 @@
             app:layout_constraintVertical_bias="0.37" />
 
         <TextView
-            viewVisibility="@{mainViewModel.readFavoriteRecipes}"
+            setVisibility="@{mainViewModel.readFavoriteRecipes}"
             android:id="@+id/no_data_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -26,21 +26,39 @@ import javax.inject.Inject
 class RecipesViewModel @Inject constructor(
     application: Application,
     private val dataStoreRepository: DataStoreRepository
-) : AndroidViewModel(application){
+) : AndroidViewModel(application) {
 
-    private var mealType = DEFAULT_MEAL_TYPE
-    private var dietType = DEFAULT_DIET_TYPE
 
-    var networkStatus  = false
+    private lateinit var mealAnDietType: MealAnDietType
+
+    var networkStatus = false
     var backOnline = false
 
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
     var readBackOnline = dataStoreRepository.readBackOnline
 
-    fun saveMealAndDietType(mealType: String, mealTypeId: Int, dietType: String, dietTypeId: Int) =
+    fun saveMealAndDietType() =
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveMealAnDietType(mealType, mealTypeId, dietType, dietTypeId)
+            dataStoreRepository.saveMealAnDietType(
+                mealAnDietType.selectedMealType,
+                mealAnDietType.selectedMealTypeId,
+                mealAnDietType.selectedDietType,
+                mealAnDietType.selectedDietTypeId)
         }
+
+    fun saveMealAndDietTypeTemp(
+        mealType: String,
+        mealTypeId: Int,
+        dietType: String,
+        dietTypeId: Int
+    ) {
+        mealAnDietType = MealAnDietType(
+            mealType,
+            mealTypeId,
+            dietType,
+            dietTypeId
+        )
+    }
 
     private fun saveBackOnline(backOnline: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -50,18 +68,10 @@ class RecipesViewModel @Inject constructor(
     fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
 
-        viewModelScope.launch {
-            // lấy từ local database
-            readMealAndDietType.collect { value ->  
-                mealType = value.selectedMealType
-                dietType = value.selectedDietType
-            }
-        }
-
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
-        queries[Constants.QUERY_TYPE] = mealType
-        queries[Constants.QUERY_DIET] = dietType
+        queries[Constants.QUERY_TYPE] = mealAnDietType.selectedMealType
+        queries[Constants.QUERY_DIET] = mealAnDietType.selectedDietType
         queries[QUERY_ADD_RECIPES_INFORMATION] = "true"
         queries[Constants.QUERY_FILL_INGREDIENTS] = "true"
         queries[Constants.QUERY_ADD_RECIPE_NUTRITION] = "true"
@@ -82,7 +92,7 @@ class RecipesViewModel @Inject constructor(
     }
 
     fun showNetworkStatus() {
-        if(!networkStatus) {
+        if (!networkStatus) {
             Toast.makeText(getApplication(), "No Internet Connection", Toast.LENGTH_SHORT).show()
             saveBackOnline(true)
         } else if (networkStatus) {

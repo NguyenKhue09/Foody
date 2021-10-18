@@ -151,6 +151,9 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                     response.data?.let {
                         mAdapter.setData(it)
                     }
+                    // fix lỗi ở video 147(chỉ lưu dữ liệu thật sự khi
+                    // có dữ liệu trả về)
+                    recipesViewModel.saveMealAndDietType()
                 }
                 is NetworkResult.Error -> {
                     hideShimmerEffect()

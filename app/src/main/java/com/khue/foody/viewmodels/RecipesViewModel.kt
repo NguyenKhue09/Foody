@@ -13,8 +13,10 @@ import com.khue.foody.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.khue.foody.util.Constants.Companion.DEFAULT_RECIPES_NUMBER
 import com.khue.foody.util.Constants.Companion.QUERY_ADD_RECIPES_INFORMATION
 import com.khue.foody.util.Constants.Companion.QUERY_API_KEY
+import com.khue.foody.util.Constants.Companion.QUERY_DIET
 import com.khue.foody.util.Constants.Companion.QUERY_NUMBER
 import com.khue.foody.util.Constants.Companion.QUERY_SEARCH
+import com.khue.foody.util.Constants.Companion.QUERY_TYPE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +31,7 @@ class RecipesViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
 
 
-    private lateinit var mealAnDietType: MealAnDietType
+    private lateinit var mealAndDietType: MealAnDietType
 
     var networkStatus = false
     var backOnline = false
@@ -39,11 +41,14 @@ class RecipesViewModel @Inject constructor(
 
     fun saveMealAndDietType() =
         viewModelScope.launch(Dispatchers.IO) {
-            dataStoreRepository.saveMealAnDietType(
-                mealAnDietType.selectedMealType,
-                mealAnDietType.selectedMealTypeId,
-                mealAnDietType.selectedDietType,
-                mealAnDietType.selectedDietTypeId)
+            if (this@RecipesViewModel::mealAndDietType.isInitialized) {
+                dataStoreRepository.saveMealAnDietType(
+                    mealAndDietType.selectedMealType,
+                    mealAndDietType.selectedMealTypeId,
+                    mealAndDietType.selectedDietType,
+                    mealAndDietType.selectedDietTypeId
+                )
+            }
         }
 
     fun saveMealAndDietTypeTemp(
@@ -52,7 +57,7 @@ class RecipesViewModel @Inject constructor(
         dietType: String,
         dietTypeId: Int
     ) {
-        mealAnDietType = MealAnDietType(
+        mealAndDietType = MealAnDietType(
             mealType,
             mealTypeId,
             dietType,
@@ -70,11 +75,17 @@ class RecipesViewModel @Inject constructor(
 
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
         queries[QUERY_API_KEY] = API_KEY
-        queries[Constants.QUERY_TYPE] = mealAnDietType.selectedMealType
-        queries[Constants.QUERY_DIET] = mealAnDietType.selectedDietType
         queries[QUERY_ADD_RECIPES_INFORMATION] = "true"
         queries[Constants.QUERY_FILL_INGREDIENTS] = "true"
         queries[Constants.QUERY_ADD_RECIPE_NUTRITION] = "true"
+
+        if (this@RecipesViewModel::mealAndDietType.isInitialized) {
+            queries[QUERY_TYPE] = mealAndDietType.selectedMealType
+            queries[QUERY_DIET] = mealAndDietType.selectedDietType
+        } else {
+            queries[QUERY_TYPE] = DEFAULT_MEAL_TYPE
+            queries[QUERY_DIET] = DEFAULT_DIET_TYPE
+        }
 
         return queries
     }

@@ -65,9 +65,9 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
         setupRecyclerView()
 
-        recipesViewModel.readBackOnline.asLiveData().observe(viewLifecycleOwner, {
+        recipesViewModel.readBackOnline.asLiveData().observe(viewLifecycleOwner) {
             recipesViewModel.backOnline = it
-        })
+        }
 
         // thay launch bằng launchWhen.. để ko bị crash app do chuyển sang
         // fragment khác khi tắt wifi đi

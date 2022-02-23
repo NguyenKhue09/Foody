@@ -22,7 +22,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            // if apply R8 change to true
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -87,7 +89,7 @@ dependencies {
     //implementation("androidx.lifecycle:lifecycle-runtime-ktx:ktx:2.3.1")
 
     // Coil
-    implementation("io.coil-kt:coil:1.3.2")
+    implementation("io.coil-kt:coil:1.4.0")
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.8'

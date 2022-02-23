@@ -136,21 +136,21 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun checkSavedRecipes(menuItem: MenuItem) {
-        mainViewModel.readFavoriteRecipes.observe(this,
-            {   favoritesEntity ->
-                try {
-                    for (savedRecipe in favoritesEntity) {
-                        if (savedRecipe.result.id == args.result.id) {
-                            Log.d("Vl", "${savedRecipe.result.id} + ${args.result.id}")
-                            changeMenuItemColor(menuItem, R.color.yellow)
-                            savedRecipeId = savedRecipe.id
-                            recipeSaved = true
-                        }
+        mainViewModel.readFavoriteRecipes.observe(this
+        ) { favoritesEntity ->
+            try {
+                for (savedRecipe in favoritesEntity) {
+                    if (savedRecipe.result.id == args.result.id) {
+                        Log.d("Vl", "${savedRecipe.result.id} + ${args.result.id}")
+                        changeMenuItemColor(menuItem, R.color.yellow)
+                        savedRecipeId = savedRecipe.id
+                        recipeSaved = true
                     }
-                } catch (e: Exception) {
-                    Log.d("DetailActivity", e.message.toString())
                 }
-            })
+            } catch (e: Exception) {
+                Log.d("DetailActivity", e.message.toString())
+            }
+        }
     }
 
     override fun onDestroy() {

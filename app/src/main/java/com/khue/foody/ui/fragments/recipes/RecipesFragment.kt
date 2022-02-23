@@ -47,8 +47,8 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-        recipesViewModel = ViewModelProvider(requireActivity()).get(RecipesViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        recipesViewModel = ViewModelProvider(requireActivity())[RecipesViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -129,7 +129,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private fun readDatabase() {
         lifecycleScope.launch {
-            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, { database ->
+            mainViewModel.readRecipes.observeOnce(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "readDatabase called!")
                     mAdapter.setData(database[0].foodRecipe)
@@ -137,15 +137,15 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                 } else {
                     requestApiData()
                 }
-            })
+            }
         }
     }
 
     private fun requestApiData() {
         Log.d("RecipesFragment", "requestApiData called!")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
-        mainViewModel.recipeResponse.observe(viewLifecycleOwner, { response ->
-            when(response) {
+        mainViewModel.recipeResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()
                     response.data?.let {
@@ -168,48 +168,48 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
                     showShimmerEffect()
                 }
             }
-        })
+        }
     }
 
     private fun searchApiData(searchQuery: String) {
         showShimmerEffect()
         mainViewModel.searchRecipes(recipesViewModel.applySearchQuery(searchQuery))
         mainViewModel.searchRecipesResponse.observe(
-          viewLifecycleOwner, { response ->
-                when(response) {
-                    is NetworkResult.Success -> {
-                        hideShimmerEffect()
-                        val foodRecipe = response.data
-                        foodRecipe?.let {
-                            mAdapter.setData(it)
-                        }
-                    }
-                    is NetworkResult.Error -> {
-                        hideShimmerEffect()
-                        loadDataFromCache()
-                        Toast.makeText(
-                            requireContext(),
-                            response.message.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    is NetworkResult.Loading -> {
-                        showShimmerEffect()
+          viewLifecycleOwner
+        ) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    hideShimmerEffect()
+                    val foodRecipe = response.data
+                    foodRecipe?.let {
+                        mAdapter.setData(it)
                     }
                 }
+                is NetworkResult.Error -> {
+                    hideShimmerEffect()
+                    loadDataFromCache()
+                    Toast.makeText(
+                        requireContext(),
+                        response.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                is NetworkResult.Loading -> {
+                    showShimmerEffect()
+                }
+            }
 
-          }
-        )
+        }
     }
 
     private fun loadDataFromCache() {
         lifecycleScope.launch {
-            mainViewModel.readRecipes.observe(viewLifecycleOwner, { database ->
+            mainViewModel.readRecipes.observe(viewLifecycleOwner) { database ->
                 if (database.isNotEmpty()) {
                     Log.d("RecipesFragment", "readDatabase called!")
                     mAdapter.setData(database[0].foodRecipe)
                 }
-            })
+            }
         }
     }
 
